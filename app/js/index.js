@@ -176,6 +176,8 @@ const createButton = document.querySelector("#create-button")
 const createTaskContainer = document.querySelector("#create-new-task")
 const closeButton = document.querySelector("#close-button")
 const createTaskForm = document.querySelector("#create-task-form")
+const createTaskInputField = document.querySelector("#task-title")
+const createTaskTextAreaField = document.querySelector("#task-description")
 let isCreatingTask = false
 
 // Event listeners for createButton
@@ -217,9 +219,12 @@ const createNewTask = (title, description) => {
     }
 
     toggleCreateTask()
+
+    createTaskInputField.value = ""
+    createTaskTextAreaField.value = ""
+
     tasks.push(newTask)
     paintTasks(tasks)
-
 }
 
 // Remove a task

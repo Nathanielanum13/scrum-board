@@ -58,6 +58,7 @@
     border-radius: .05rem;
     cursor: pointer;
     transition: all .25s ease;
+    font-weight: normal;
 }
 .card > .remove {
     padding: .25rem .75rem;

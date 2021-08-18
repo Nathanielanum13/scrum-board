@@ -4,7 +4,7 @@
     position: fixed;
     top: -200%;
     z-index: 10;
-    background-color: hsla(0, 0%, 0%, 0.6);
+    background-color: hsla(0, 0%, 0%, .9);
     backdrop-filter: blur(1rem) brightness(.9);
     border-bottom: 2px solid hsla(0, 0%, 0%, 0.7);
 
