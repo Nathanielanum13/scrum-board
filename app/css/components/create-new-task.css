@@ -4,13 +4,17 @@
     position: fixed;
     top: -200%;
     z-index: 10;
-    background-color: hsla(0, 0%, 0%, .9);
+    background-color: hsla(0, 0%, 0%, .75);
     backdrop-filter: blur(1rem) brightness(.9);
     border-bottom: 2px solid hsla(0, 0%, 0%, 0.7);
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.scrum-create-new-task.t-body {
+    background-color: transparent;
+    backdrop-filter: blur(10px);
 }
 .create-task-container {
     width: 50%;
@@ -24,7 +28,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     background-color: var(--danger);
-    color: var(--light);
+    color: #ffffff;
     font-size: 2rem;
 
     display: flex;

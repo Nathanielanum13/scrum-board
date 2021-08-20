@@ -1,3 +1,6 @@
+import Duration from "./djuration.js"
+import { darkTheme, lightTheme } from "./themes.js"
+
 let tasks = []
 tasks = loadTasks()
 
@@ -11,7 +14,7 @@ let activeArea;
 
 const paintTasks = (tasks = []) => {
     resetDefault()
-    // Save current task to localStorage
+        // Save current task to localStorage
     saveTasks(tasks)
     tasks.forEach(task => {
         if (task.status === "todo") paintTodoTask(task)
@@ -66,27 +69,29 @@ const paintDoneTask = (task) => {
 }
 
 const cardGenerator = (task, showShipButton = true) => {
-    const newTask = document.createElement("div")
-    newTask.setAttribute("class", `card ${task.status}`)
-    newTask.setAttribute("key", `${task.id}`)
-    newTask.setAttribute("draggable", "true")
+        const newTask = document.createElement("div")
+        newTask.setAttribute("class", `card ${task.status}`)
+        newTask.setAttribute("key", `${task.id}`)
+        newTask.setAttribute("draggable", "true")
 
-    newTask.innerHTML =
-        `
-    <h4 class="card-title">
-        ${task.taskTitle}<span class="move">:</span>
-    </h4>
-    <p class="text card-text">
-        ${task.taskDescription}
-    </p>
-    ${showShipButton ? `
-    <span class="ship-to-next" current-status="${task.status}" id="${task.id}">
-        Ship to next
-    </span>` : ``}
-    <span id="${task.id}" class="remove ${showShipButton ? '' : 'only'}">Remove</span>
-    <div class="card-footer">
-        <h5 class="text">${task.createdOn}</h6>
-    </div>
+        newTask.innerHTML =
+            `
+        <h4 class="card-title">
+            ${task.taskTitle}<span class="move">:</span>
+        </h4>
+        <p class="text card-text">
+            ${task.taskDescription}
+        </p>
+        ${showShipButton ? `
+        <span class="ship-to-next" current-status="${task.status}" id="${task.id}">
+            Ship to next
+        </span>` : ``}
+        <span id="${task.id}" class="remove ${showShipButton ? '' : 'only'}">Remove</span>
+        <div class="card-footer">
+        ${task.status === "done" 
+        ? `<h5 class="text">Done in ${new Duration(dateParser(task.doneOn) - dateParser(task.inProgressOn)).formatAll(" ")}</h6>` 
+        : `<h5 class="text">${task.createdOn}</h6>`}
+        </div>
     `
 
     return newTask
@@ -143,7 +148,7 @@ const updateTaskStatus = (id, area) => {
     if (id === undefined || area === undefined) return [...tasks]
     return tasks.map(task => {
         if (task.id === id) {
-            return { ...task, status: `${area}` }
+            return { ...task, status: `${area}`, inProgressOn: area === "in-progress" ? getNowDate() : task.inProgressOn, doneOn: area === "done" ? getNowDate() : task.doneOn }
         } else {
             return { ...task }
         }
@@ -268,3 +273,37 @@ function loadTasks () {
 }
 
 function saveTasks (tasks) { window.localStorage["tasks"] = JSON.stringify(tasks) }
+
+const getNowDate = () => `${new Date().toDateString() + ' ' + new Date().toLocaleTimeString()}`
+
+function dateParser (date = '') {
+    if (date === '' || date === undefined || date === null) return new Date().toDateString()
+    return new Date(date)
+}
+
+let isNight = JSON.parse(window.localStorage.getItem("dark-theme")) || false
+toggleTheme()
+const toggler = document.querySelector("#dark-light-toggle")
+toggler.addEventListener("change", (e) => toggleLightDarkMode())
+
+function toggleLightDarkMode () {
+    isNight = !isNight
+    toggleTheme()
+    window.localStorage["dark-theme"] = JSON.stringify(isNight)
+}
+
+function toggleTheme() {
+    if (isNight) {
+        createTaskContainer.classList.add("t-body")
+        darkTheme.forEach(root => {
+            let rootProperty = document.documentElement
+            rootProperty.style.setProperty(root.property, root.value)
+        })
+    } else {
+        createTaskContainer.classList.remove("t-body")
+        lightTheme.forEach(root => {
+            let rootProperty = document.documentElement
+            rootProperty.style.setProperty(root.property, root.value)
+        })
+    }
+}

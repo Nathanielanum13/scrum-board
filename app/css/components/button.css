@@ -14,7 +14,7 @@ button.scrum-btn {
 }
 button.scrum-btn.dark {
     background-color: var(--darker-color);
-    color: var(--light);
+    color: #ffffff;
     border: none;
 }
 button.scrum-btn.dark:hover {
@@ -26,7 +26,7 @@ button.scrum-btn.dark:not(:hover) {
 }
 button.scrum-btn.danger {
     background-color: var(--danger);
-    color: var(--light);
+    color: #ffffff;
     border: none;
 }
 button.scrum-btn.danger:hover {

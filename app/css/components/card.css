@@ -63,7 +63,7 @@
 .card > .remove {
     padding: .25rem .75rem;
     background-color: var(--danger);
-    color: var(--light);
+    color: #ffffff;
     border-radius: .05rem;
     cursor: pointer;
     transition: all .25s ease;
